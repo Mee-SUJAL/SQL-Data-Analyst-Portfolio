@@ -22,3 +22,16 @@ WHERE salary > 70000;
 
 SELECT AVG(salary) AS average_salary
 FROM employees;
+
+-- USING MULTIPLE AGGREGATIONS --
+SELECT AVG(SALARY), SUM(SALARY), MAX(SALARY), MIN(SALARY) 
+FROM employees;
+
+-- YOU CAN GIVE ALIAS ALSO WHICH WORKS AS A TEMPORARY NAME OF A COLUMN --
+ SELECT AVG(SALARY) as Average, SUM(SALARY) Total_Salary, MAX(SALARY) Maximum_Salary, MIN(SALARY) Minimum_salary
+FROM employees; -- You can use 'as' or you don't it your choice --
+
+-- HAVING CLAUSE :- This clause provides you the condition on your Aggregated table --
+SELECT SUM(SALARY) as Total_salary
+FROM employees group by dept_id having  Total_salary>100000;  -- IT returns the total salary which is more than 100000
+
