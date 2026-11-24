@@ -35,3 +35,23 @@ FROM employees; -- You can use 'as' or you don't it your choice --
 SELECT SUM(SALARY) as Total_salary
 FROM employees group by dept_id having  Total_salary>100000;  -- IT returns the total salary which is more than 100000
 
+-- LOGICAL OPERATORS IN SQL --
+-- IN Operator --
+select * from employees where emp_name in ('Alice','bob','Frank','hannah');
+
+-- NOT IN Operator -- 
+select * from employees where emp_name not in ('Alice','bob','Frank','hannah'); -- It will return only the people who does not belong to the in condition
+
+
+-- Or operato --
+select * from employees where dept_id = 2 or emp_name= 'Bob'; -- It will return the condition which is true, will return both if they are true
+
+-- And Operator --
+select * from employees where dept_id =1 and emp_name='Alice'; -- it will only return the condition which is true 
+select * from employees where dept_id =1 and emp_name='Bob'; -- here only dept_id is true 
+select * from employees where dept_id =1 and dept_id=3; -- here you cannot give both same condtion
+
+-- less than operator is to compare both --
+
+
+
