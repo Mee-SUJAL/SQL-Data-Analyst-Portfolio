@@ -57,3 +57,92 @@ where o.amount>(select avg(amount) from orders);
 select e.emp_name, count(o.cust_id) from employees e join orders o on e.emp_id=o.cust_id group by e.emp_id;
 select * from (select e.emp_name, count(o.cust_id) from employees e join orders o on e.emp_id=o.cust_id group by cust_id) t1;
 
+-- Print Department name, location and maximum salary from employees using joins--
+select d.dept_id, max(e.salary) from employees e join (select dept_id,  max(salary) as max_salary from employees
+group by dept_id)  dm on dm.dept_id=e.dept_id join department d on d.dept_id=e.dept_id
+where dm.max_salary>e.salary group by d.dept_id;
+
+select * from employees e join (select dept_id,  max(salary) as max_salary from employees
+group by dept_id)  dm on dm.dept_id=e.dept_id join department d on d.dept_id=e.dept_id
+where dm.max_salary>e.salary ;
+
+select * from employees e where e.salary =(select max(salary) from employees
+group by dept_id and e.salary>(select max(salary) from employees));
+
+select * from employees e where 1=(select count(*) from employees where salary>e.salary and dept_id=e.dept_id);
+
+select * from employees;
+-- INTERMEDIATE TO ADVANCE QUESTIONS --
+select order_id, order_date, amount, emp_name, product_name
+from employees e  join orders o on e.emp_id=o.cust_id left join products p
+on p.product_id=o.product_id;
+
+select e.emp_name, e.salary,m.emp_name,m.salary from employees e join
+employees m on e.salary>m.salary and e.manager_id=m.emp_id;
+
+select emp_name,salary,total.maximum from employees e join (
+select cust_id, max(amount) as maximum from orders group by cust_id) total on 
+total.cust_id=e.emp_id;
+
+select p.product_name,sum(amount) as total from orders o join products p on 
+o.product_id=p.product_id and (o.order_payment_type='Upi' or
+o.order_payment_type='card')
+group by p.product_name having total>2000;
+select * from employees ;
+select * from orders ;
+
+select emp_name,p.product_name from employees e left join orders o 
+on e.emp_id=o.cust_id left join 
+products p on p.product_id=o.product_id;
+
+select m.emp_name as Manager,sum(o.amount)  from employees e inner
+join employees m on m.emp_id=e.manager_id inner join orders o on 
+o.cust_id=e.emp_id group by m.emp_name ;
+
+SELECT 
+    m.emp_name AS manager_name,
+    SUM(o.amount) AS team_total_spending
+FROM employees m
+INNER JOIN employees e 
+    ON m.emp_id = e.manager_id
+INNER JOIN orders o 
+    ON e.emp_id = o.cust_id
+GROUP BY m.emp_name;
+
+select * from orders;
+select e.* from employees e join orders o on e.emp_id=o.cust_id join products p 
+on p.product_id=o.product_id where
+ o.amount=(select max(amount) from orders);
+ 
+ select avg(amount) from orders group by cust_id;
+ select sum(amount) from orders group by cust_id;
+ 
+select * from employees e join 
+(select cust_id,  avg(amount) as avg_amount from orders group by cust_id) average
+on e.emp_id=average.cust_id
+join (select o.cust_id, sum(amount) as total_sum from orders o group by cust_id) total
+on total.cust_id=average.cust_id
+where total.total_sum>=average.avg_amount;
+
+
+-- omparing Against Average Spend (Derived Table Joins): Write a query using joins and derived tables to find the emp_name and total spending of customers whose total order amount 
+-- is greater than the average total spending of all customers who have placed orders.
+select * from employees e join 
+ (select o.cust_id, sum(amount) as total_sum from orders o group by cust_id) total
+on e.emp_id=total.cust_id
+where total.total_sum>=(select avg(amount) as avg_amount from orders);
+
+select * from orders o join orders p on o.cust_id=p.cust_id;
+
+-- CASE WHEN --
+
+select e.*,d.dept_name,
+case 
+when d.dept_name in ('Finance','IT')
+then 'Technical'
+when d.dept_name in ('Sales','HR')
+then 'Non-Technical' 
+else 'OTHER'
+end as 'Dept_Category'
+ from employees e right join department d 
+on e.dept_id=d.dept_id;
