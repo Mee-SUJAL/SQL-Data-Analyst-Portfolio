@@ -51,7 +51,45 @@ select * from employees where dept_id =1 and emp_name='Alice'; -- it will only r
 select * from employees where dept_id =1 and emp_name='Bob'; -- here only dept_id is true 
 select * from employees where dept_id =1 and dept_id=3; -- here you cannot give both same condtion
 
--- less than operator is to compare both --
+-- COMPARISON OPERATOR --
+-- Q1. Write a query to display employees whose salary
+-- is greater than 40000.
 
+SELECT *
+FROM employees
+WHERE salary > 40000;
 
+-- Q2. Write a query to display employees whose age
+-- is less than 30.
 
+SELECT *
+FROM employees
+WHERE age < 30;
+
+-- Q3. Write a query to display employees who belong
+-- to the IT department.
+
+SELECT *
+FROM employees
+WHERE department = 'IT';
+
+-- Q4. Write a query to display employees whose department
+-- is not HR.
+
+SELECT *
+FROM employees
+WHERE department != 'HR';
+
+-- Q5. Write a query to display employees whose salary
+-- is greater than or equal to 45000.
+
+SELECT *
+FROM employees
+WHERE salary >= 45000;
+
+-- Q6. Write a query to display employees whose age
+-- is less than or equal to 25.
+
+SELECT *
+FROM employees
+WHERE age <= 25;
